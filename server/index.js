@@ -10,7 +10,6 @@ const {
   deleteUserFavorite,
 } = require("./db");
 
-
 const express = require("express");
 const app = express();
 app.use(express.json());
@@ -80,9 +79,9 @@ const init = async () => {
   console.log("Creating tables");
 
   const [jesse, sana, madde, pc, phone, tv] = await Promise.all([
-    createUser({ name: "Jesse", password: "jesse_pw" }),
-    createUser({ name: "Sana", password: "sana_pw" }),
-    createUser({ name: "Madde", password: "madde_pw" }),
+    createUser({ username: "Jesse", password: "jesse_pw" }),
+    createUser({ username: "Sana", password: "sana_pw" }),
+    createUser({ username: "Madde", password: "madde_pw" }),
     createProduct({ name: "PC" }),
     createProduct({ name: "Phone" }),
     createProduct({ name: "TV" }),
@@ -95,11 +94,13 @@ const init = async () => {
     createUserFavorite({ user_id: sana.id, productId: phone.id }),
     createUserFavorite({ user_id: madde.id, productId: tv.id }),
   ]);
+  console.log(jesse.id);
+  console.log(sana.id);
   console.log(await fetchUserFavorites(jesse.id));
   console.log(await fetchUserFavorites(sana.id));
   await deleteUserFavorite({ user_id: jesse.id, productId: pc.id });
 
-  const PORT = 3000;
+  const PORT = 3001;
   app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 };
 
